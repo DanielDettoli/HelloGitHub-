@@ -1,0 +1,26 @@
+
+int lux = 0;
+
+void setup ()
+{
+  Serial.begin (9600);
+  pinMode (increase, IN);
+  pinMode (decrease, IN);
+}
+
+void loop ()
+{
+  
+  int state_increase = digitalRead (increase);
+  int state_decrease = digitalRead (decrease);
+  
+  if (state_increase = 1 & lux = 0)
+    lux -;
+    
+  if (state_decrease = 1 & lux = 255)
+    lux +;
+  
+  analogWrite (led, lux);
+
+  Serial.println (lux);
+}
