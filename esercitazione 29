@@ -1,0 +1,44 @@
+#define led1 5
+#define led2 4
+#define led3 3
+#define led4 2
+#define pulsante1 6
+#define pulsante2 7
+int pos = 0;
+#define DELAY 200
+
+void setup(){
+  Serial.begin(9600);
+  pinMode (pulsante1, INPUT_PULLUP);
+  pinMode (pulsante2, INPUT_PULLUP);
+  for(int i = 0; i<=3; i++)//serve per impostare i led (dei pin).
+    pinMode(led4+i, OUTPUT);
+}
+  
+void loop(){
+  int p1 = !digitalRead(pulsante1);//è diverso dalla lettura del pulsante per via del PULLUP
+  int p2 = !digitalRead(pulsante2);//inizializzano la variabile p1 e p2 
+  if (p1 == HIGH && pos != 15){//imposta il range da 0 a 15
+    	digitalWrite(9,HIGH);
+        digitalWrite(10,LOW);
+    pos++;}
+    if (p2 == HIGH && pos != 0){//imposta il range da 0 a 15
+    	digitalWrite(10,HIGH);
+        digitalWrite(9,LOW);
+          pos--;}
+ 
+  
+  delay(DELAY);//rallenta/velocizza le tempistiche, senza di esso non potremmo leggere i vari valori
+Serial.println(pos);//stampa sul serial monitor la variabile pos
+  for(int i = 3; i >= 0; i--){//3 perché i led sono uguali a 0=1, 1=2, 2=3 3=4.
+    Serial.print((pos >> i) & 0x01);// serve per sommare la variabile pos in binario e stamparlo successivamente nel monitor seriale
+}
+  for(int i = led4; i <= led1; i++)//facendo così passo da un led all'altro
+  {
+    for(int i=3; i >= 0; i--)//in base alla variabile pos accende i vari led
+    {
+      digitalWrite(led4+i, ((pos >> i) & 0x01));//la conversione serve per far capire quale led accendere
+        
+    }
+  }
+}
