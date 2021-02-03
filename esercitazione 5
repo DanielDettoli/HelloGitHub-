@@ -1,0 +1,34 @@
+# define Pulsante1 12
+# define led1 2
+# define led2 3
+# define led3 4
+
+void setup(){
+   
+Serial.begin(9600);
+pinMode(Pulsante1, INPUT_PULLUP);
+  for(int i = led1; i <= led3; i++){
+    pinMode(i,OUTPUT);
+  }
+    
+}
+
+void loop()
+{
+  int stato_pulsante= digitalRead(Pulsante1);// legge lo stato del pulsante e lo memorizzo nella variabile ed abbiamo dato il valore del Pulsante1 
+ 
+    if(stato_pulsante == 1){
+      
+      digitalWrite(led1,HIGH);
+      digitalWrite(led2,HIGH);
+      digitalWrite(led3,HIGH);
+      
+      }
+  
+  if(stato_pulsante == 0){
+      
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,LOW);
+  }
+}
