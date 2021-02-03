@@ -1,0 +1,37 @@
+#define led1 4
+#define led2 5
+#define led3 6
+#define pulsante1 2
+#define pulsante2 3
+#define DELAY 200
+volatile int led_stato = 0;
+
+void setup(){
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(pulsante1, INPUT_PULLUP);
+  pinMode(pulsante2, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(pulsante1),
+                  ISR_accensione, CHANGE);
+}
+
+void loop(){
+  int p1 = digitalRead(pulsante1);
+  int p2 = digitalRead(pulsante2);
+  
+  if(p1 == HIGH | p2 == HIGH){
+    digitalWrite(led1, led_stato);
+    digitalWrite(led2, led_stato);
+    digitalWrite(led3, led_stato);
+  }
+  else{
+    digitalWrite(led1, LOW);
+    digitalWrite(led2, LOW);
+    digitalWrite(led3, LOW);
+  }
+  delay(DELAY);
+}
+void ISR_accensione(){
+  led_stato = HIGH;
+}
